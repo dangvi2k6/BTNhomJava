@@ -51,7 +51,7 @@ public class MainFrame extends JFrame {
         panelThuoc     = new view.ThuocPanel(currentUser);
         panelKhachHang = new PlaceholderPanel("Quản lý Khách Hàng");
         panelNhanVien  = new PlaceholderPanel("Quản lý Nhân Viên");
-        panelBanHang   = new PlaceholderPanel("Bán Hàng - Hóa Đơn");
+        panelBanHang   = new view.HoaDonPanel(currentUser);
         panelNhapHang  = new PlaceholderPanel("Nhập Hàng");
         panelBaoCao    = new PlaceholderPanel("Báo Cáo - Thống Kê");
 
