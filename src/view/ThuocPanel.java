@@ -45,9 +45,9 @@ public class ThuocPanel extends JPanel {
         JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         topPanel.add(new JLabel("Tìm kiếm:"));
         txtSearch = new JTextField(15);
-        btnSearch     = new JButton("🔍 Tìm");
-        btnSapHet     = new JButton("⚠ Sắp hết");
-        btnGanHetHan  = new JButton("📅 Gần hết hạn");
+        btnSearch     = new JButton("Tìm");
+        btnSapHet     = new JButton("Sắp hết");
+        btnGanHetHan  = new JButton("Gần hết hạn");
 
         topPanel.add(txtSearch);
         topPanel.add(btnSearch);
@@ -124,10 +124,10 @@ public class ThuocPanel extends JPanel {
         txtMaThuoc.setEditable(false); // Mã tự sinh
 
         // Buttons
-        btnAdd    = new JButton("➕ Thêm");
-        btnUpdate = new JButton("✏ Sửa");
-        btnDelete = new JButton("🗑 Xóa");
-        btnClear  = new JButton("🔄 Làm mới");
+        btnAdd    = new JButton("Thêm");
+        btnUpdate = new JButton("Sửa");
+        btnDelete = new JButton("Xóa");
+        btnClear  = new JButton("Làm mới");
 
         JPanel btnPanel = new JPanel(new GridLayout(2, 2, 5, 5));
         btnPanel.add(btnAdd);
@@ -196,7 +196,7 @@ public class ThuocPanel extends JPanel {
             return;
         }
         Thuoc t = getFormData();
-        if (thuocDAO.insert(t)) {
+        if (thuocDAO.add(t)) {
             loadTable(thuocDAO.getAll());
             clearForm();
             JOptionPane.showMessageDialog(this, "Thêm thuốc thành công!");

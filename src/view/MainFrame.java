@@ -49,7 +49,7 @@ public class MainFrame extends JFrame {
 
         // Khởi tạo các panel và thêm vào CardLayout
         panelThuoc     = new view.ThuocPanel(currentUser);
-        panelKhachHang = new PlaceholderPanel("Quản lý Khách Hàng");
+        panelKhachHang = new view.KhachHangPanel(currentUser);
         panelNhanVien  = new PlaceholderPanel("Quản lý Nhân Viên");
         panelBanHang   = new view.HoaDonPanel(currentUser);
         panelNhapHang  = new PlaceholderPanel("Nhập Hàng");
@@ -74,7 +74,7 @@ public class MainFrame extends JFrame {
         panel.setBackground(new Color(41, 128, 185));
         panel.setPreferredSize(new Dimension(0, 45));
 
-        JLabel lblTitle = new JLabel("  🏥 PHẦN MỀM QUẢN LÝ NHÀ THUỐC");
+        JLabel lblTitle = new JLabel("  PHẦN MỀM QUẢN LÝ NHÀ THUỐC");
         lblTitle.setFont(new Font("Arial", Font.BOLD, 16));
         lblTitle.setForeground(Color.WHITE);
 
@@ -96,8 +96,8 @@ public class MainFrame extends JFrame {
         panel.setPreferredSize(new Dimension(180, 0));
 
         // Tạo các nút menu
-        String[] menuNames  = {"💊 Quản lý Thuốc", "🛒 Bán hàng", "📦 Nhập hàng",
-                                "👤 Khách hàng", "👨‍💼 Nhân viên", "📊 Báo cáo", "🚪 Đăng xuất"};
+        String[] menuNames  = {"Quản lý Thuốc", "Bán hàng", "Nhập hàng",
+                                "Khách hàng", "Nhân viên", "Báo cáo", "Đăng xuất"};
         String[] menuCards  = {"THUOC", "BANHANG", "NHAPHANG", "KHACHHANG", "NHANVIEN", "BAOCAO", "LOGOUT"};
 
         panel.add(Box.createVerticalStrut(10));

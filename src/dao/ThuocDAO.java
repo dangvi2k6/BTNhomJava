@@ -15,8 +15,9 @@ public class ThuocDAO {
     public List<Thuoc> getAll() {
         List<Thuoc> list = new ArrayList<>();
         String sql = "SELECT * FROM Thuoc ORDER BY maThuoc";
-        try (Statement st = conn.createStatement();
-             ResultSet rs = st.executeQuery(sql)) {
+        try {
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
             while (rs.next()) list.add(mapRow(rs));
         } catch (SQLException e) { e.printStackTrace(); }
         return list;
@@ -25,10 +26,11 @@ public class ThuocDAO {
     // Tìm kiếm theo tên hoặc mã
     public List<Thuoc> search(String keyword) {
         List<Thuoc> list = new ArrayList<>();
-        String sql = "SELECT * FROM Thuoc WHERE tenThuoc LIKE ? OR maThuoc LIKE ?";
+        String sql = "SELECT * FROM Thuoc WHERE tenThuoc LIKE ? OR maThuoc LIKE ? OR loaiThuoc LIKE ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, "%" + keyword + "%");
             ps.setString(2, "%" + keyword + "%");
+            ps.setString(3, "%" + keyword + "%");
             ResultSet rs = ps.executeQuery();
             while (rs.next()) list.add(mapRow(rs));
         } catch (SQLException e) { e.printStackTrace(); }
@@ -58,7 +60,7 @@ public class ThuocDAO {
     }
 
     // Thêm thuốc
-    public boolean insert(Thuoc t) {
+    public boolean add(Thuoc t) {
         String sql = "INSERT INTO Thuoc VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, t.getMaThuoc());
