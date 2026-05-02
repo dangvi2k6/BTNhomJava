@@ -53,7 +53,7 @@ public class MainFrame extends JFrame {
         panelNhanVien  = new view.NhanVienPanel(currentUser);
         panelBanHang   = new view.HoaDonPanel(currentUser);
         panelNhapHang  = new PlaceholderPanel("Nhập Hàng");
-        panelBaoCao    = new PlaceholderPanel("Báo Cáo - Thống Kê");
+        panelBaoCao    = new view.BaoCaoPanel();
 
         panelContent.add(panelThuoc,     "THUOC");
         panelContent.add(panelKhachHang, "KHACHHANG");
