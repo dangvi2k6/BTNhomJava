@@ -117,7 +117,7 @@ public class KhachHangDAO {
     }
 
     public String generateMaKH() {
-        String sql = "SELECT MAX(CAST(SUBSTRING(maKH, 3, LENGTH(maKH)) AS UNSIGNED)) FROM KhachHang";
+        String sql = "SELECT MAX(CAST(SUBSTRING(maKH, 3, LEN(maKH)) AS INT)) FROM KhachHang";
         try (Statement st = conn.createStatement();
              ResultSet rs = st.executeQuery(sql)) {
 

@@ -27,10 +27,10 @@ public class NhanVienDAO {
         return null; // Đăng nhập thất bại
     }
 
-    // Lấy tất cả nhân viên
-    public List<NhanVien> getAll() {
+    // Lấy tất cả nhân viên la staff
+    public List<NhanVien> getAllStaff() {
         List<NhanVien> list = new ArrayList<>();
-        String sql = "SELECT * FROM NhanVien ORDER BY maNV";
+        String sql = "SELECT * FROM NhanVien WHERE vaiTro='Staff' ORDER BY maNV";
         try (Statement st = conn.createStatement();
              ResultSet rs = st.executeQuery(sql)) {
             while (rs.next()) {
@@ -42,6 +42,31 @@ public class NhanVienDAO {
         return list;
     }
 
+    public List<NhanVien> search(String keyword) throws Exception {
+        String sql = """
+            SELECT maNV, tenNV, username, vaiTro, sdt, diaChi
+            FROM nhanvien
+            WHERE vaiTro='Staff' AND (maNV LIKE ? OR tenNV LIKE ? OR username LIKE ? OR sdt LIKE ?)
+            ORDER BY maNV
+        """;
+
+        String like = "%" + (keyword == null ? "" : keyword.trim()) + "%";
+        List<NhanVien> list = new ArrayList<>();
+
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, like);
+            ps.setString(2, like);
+            ps.setString(3, like);
+            ps.setString(4, like);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) list.add(mapRow(rs));
+            }
+        }
+        return list;
+    }
     // Thêm nhân viên
     public boolean insert(NhanVien nv) {
         String sql = "INSERT INTO NhanVien VALUES (?, ?, ?, ?, ?, ?, ?)";
@@ -103,6 +128,21 @@ public class NhanVienDAO {
             e.printStackTrace();
         }
         return "NV001";
+    }
+
+    public boolean existsUsername(String username, String excludeMaNV) throws Exception {
+        String sql = "SELECT COUNT(*) FROM nhanvien WHERE username=? " + (excludeMaNV != null ? "AND maNV<>?" : "");
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, username);
+            if (excludeMaNV != null) ps.setString(2, excludeMaNV);
+
+            try (ResultSet rs = ps.executeQuery()) {
+                rs.next();
+                return rs.getInt(1) > 0;
+            }
+        }
     }
 
     // Map ResultSet → NhanVien object

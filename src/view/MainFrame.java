@@ -50,7 +50,7 @@ public class MainFrame extends JFrame {
         // Khởi tạo các panel và thêm vào CardLayout
         panelThuoc     = new view.ThuocPanel(currentUser);
         panelKhachHang = new view.KhachHangPanel(currentUser);
-        panelNhanVien  = new PlaceholderPanel("Quản lý Nhân Viên");
+        panelNhanVien  = new view.NhanVienPanel(currentUser);
         panelBanHang   = new view.HoaDonPanel(currentUser);
         panelNhapHang  = new PlaceholderPanel("Nhập Hàng");
         panelBaoCao    = new PlaceholderPanel("Báo Cáo - Thống Kê");
@@ -70,22 +70,39 @@ public class MainFrame extends JFrame {
 
     // Tạo Header
     private JPanel createHeader() {
-        JPanel panel = new JPanel(new BorderLayout());
-        panel.setBackground(new Color(41, 128, 185));
-        panel.setPreferredSize(new Dimension(0, 45));
 
+        JPanel header = new JPanel(new BorderLayout());
+        header.setBackground(new Color(0, 102, 204));
+        header.setPreferredSize(new Dimension(0, 50));
+
+        // ===== LEFT: TITLE =====
         JLabel lblTitle = new JLabel("  PHẦN MỀM QUẢN LÝ NHÀ THUỐC");
         lblTitle.setFont(new Font("Arial", Font.BOLD, 16));
         lblTitle.setForeground(Color.WHITE);
 
-        JLabel lblUser = new JLabel("Xin chào: " + currentUser.getTenNV() + "   ");
+        // ===== RIGHT: USER + LOGOUT =====
+        JPanel rightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 10));
+        rightPanel.setOpaque(false); // quan trọng để giữ màu nền
+
+        JLabel lblUser = new JLabel("Xin chào: " + currentUser.getTenNV());
         lblUser.setFont(new Font("Arial", Font.PLAIN, 13));
         lblUser.setForeground(Color.WHITE);
 
-        panel.add(lblTitle, BorderLayout.WEST);
-        panel.add(lblUser, BorderLayout.EAST);
+        JButton btnLogout = new JButton("Logout");
+        btnLogout.setFocusPainted(false);
+        btnLogout.setBackground(Color.WHITE);
+        btnLogout.setForeground(Color.BLACK);
 
-        return panel;
+        btnLogout.addActionListener(e -> logout());
+
+        rightPanel.add(lblUser);
+        rightPanel.add(btnLogout);
+
+        // ===== ADD TO HEADER =====
+        header.add(lblTitle, BorderLayout.WEST);
+        header.add(rightPanel, BorderLayout.EAST);
+
+        return header;
     }
 
     // Tạo Sidebar menu
@@ -97,8 +114,8 @@ public class MainFrame extends JFrame {
 
         // Tạo các nút menu
         String[] menuNames  = {"Quản lý Thuốc", "Bán hàng", "Nhập hàng",
-                                "Khách hàng", "Nhân viên", "Báo cáo", "Đăng xuất"};
-        String[] menuCards  = {"THUOC", "BANHANG", "NHAPHANG", "KHACHHANG", "NHANVIEN", "BAOCAO", "LOGOUT"};
+                                "Khách hàng", "Nhân viên", "Báo cáo"};
+        String[] menuCards  = {"THUOC", "BANHANG", "NHAPHANG", "KHACHHANG", "NHANVIEN", "BAOCAO"};
 
         panel.add(Box.createVerticalStrut(10));
 
@@ -107,9 +124,6 @@ public class MainFrame extends JFrame {
             JButton btn = createMenuButton(menuNames[i]);
 
             btn.addActionListener(e -> {
-                if ("LOGOUT".equals(card)) {
-                    logout();
-                } else {
                     // Kiểm tra quyền: chỉ Admin mới xem Nhân viên
                     if ("NHANVIEN".equals(card) && !currentUser.isAdmin()) {
                         JOptionPane.showMessageDialog(this,
@@ -119,7 +133,7 @@ public class MainFrame extends JFrame {
                     }
                     cardLayout.show(panelContent, card);
                 }
-            });
+            );
 
             panel.add(btn);
             panel.add(Box.createVerticalStrut(2));
