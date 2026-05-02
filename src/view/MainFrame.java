@@ -52,7 +52,7 @@ public class MainFrame extends JFrame {
         panelKhachHang = new view.KhachHangPanel(currentUser);
         panelNhanVien  = new view.NhanVienPanel(currentUser);
         panelBanHang   = new view.HoaDonPanel(currentUser);
-        panelNhapHang  = new PlaceholderPanel("Nhập Hàng");
+        panelNhapHang  = new view.NhapHangPanel(currentUser);
         panelBaoCao    = new view.BaoCaoPanel();
 
         panelContent.add(panelThuoc,     "THUOC");
@@ -179,19 +179,6 @@ public class MainFrame extends JFrame {
             dispose();
             LoginFrame loginFrame = new LoginFrame();
             loginFrame.setVisible(true);
-        }
-    }
-
-    // -----------------------------------------------
-    // Panel tạm - thành viên khác sẽ thay thế
-    // -----------------------------------------------
-    static class PlaceholderPanel extends JPanel {
-        public PlaceholderPanel(String title) {
-            setLayout(new BorderLayout());
-            JLabel lbl = new JLabel(title + " - Đang phát triển...", SwingConstants.CENTER);
-            lbl.setFont(new Font("Arial", Font.BOLD, 20));
-            lbl.setForeground(Color.GRAY);
-            add(lbl, BorderLayout.CENTER);
         }
     }
 }

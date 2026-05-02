@@ -234,7 +234,7 @@ public class KhachHangPanel extends JPanel {
 
     // ===== CLEAR =====
     private void clearForm() {
-        table.clearSelection();
+        //table.clearSelection();
 
         txtMaKH.setText(generateMa());
         txtTenKH.setText("");

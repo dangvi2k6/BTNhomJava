@@ -349,7 +349,7 @@ public class NhanVienPanel extends JPanel {
 
     // ===== CLEAR =====
     private void clearForm() {
-        table.clearSelection();
+        //table.clearSelection();
 
         txtMaNV.setText(generateMa());
         txtTenNV.setText("");
