@@ -112,7 +112,10 @@ public class NhapHangDAO {
             return false;
         } finally {
             if (con != null) {
-                try { con.setAutoCommit(true); } catch (SQLException ignored) {}
+                try { 
+                    con.setAutoCommit(true); 
+                    con.close(); 
+                } catch (SQLException ignored) {}
             }
         }
     }
